@@ -2,6 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class BarChallenge : MonoBehaviour
 {
@@ -11,8 +12,8 @@ public class BarChallenge : MonoBehaviour
     private float playerPointerPosition;
     public GameObject playerPointer;
 
-    UnityEvent OnSuccess;
-    UnityEvent OnFail;
+    public UnityEvent OnSuccess;
+    public UnityEvent OnFail;
 
     private int barLength = 100;
 
@@ -21,6 +22,8 @@ public class BarChallenge : MonoBehaviour
     public GameObject challangeBar;
 
     public GameObject barClickPoint;
+
+    private bool barActive;
 
     private void Awake()
     {
@@ -36,16 +39,22 @@ public class BarChallenge : MonoBehaviour
 
     private void Start()
     {
+        SetObjectState(true);
+
         SetBarDimensions();
 
         OnSuccess = new UnityEvent();
-        //OnSuccess.AddListener(LevelManager.Instance.AdvanceRound);
 
         OnFail = new UnityEvent();
     }
 
     private void Update()
     {
+
+        if (!barActive)
+        {
+            return;
+        }
 
         MovePointer();
     }
@@ -67,8 +76,14 @@ public class BarChallenge : MonoBehaviour
 
     public void Action()
     {
+        if (!barActive)
+        {
+            return;
+        }
+
         if (InBoundsOfGoal())
         {
+            SetNewChallange(50);
             OnSuccess.Invoke();
             Debug.Log("win");
         }
@@ -110,5 +125,11 @@ public class BarChallenge : MonoBehaviour
     private float RandomPositionInRangeOfBar()
     {
         return UnityEngine.Random.Range(0,100);
+    }
+
+    private void SetObjectState(bool x)
+    {
+        barActive = x;
+        challangeBar.SetActive(barActive);
     }
 }
