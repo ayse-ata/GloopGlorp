@@ -8,6 +8,7 @@ public class Customer : ScriptableObject
     public int rounds;
     [SerializeField]
     public Difficulty difficulty;
+    public string drinkOrder;
  
     [System.Serializable]
     public enum Difficulty

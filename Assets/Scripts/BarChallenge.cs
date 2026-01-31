@@ -12,6 +12,9 @@ public class BarChallenge : MonoBehaviour
     private float _playerPointerPosition;
     public GameObject _playerPointer;
 
+    public delegate void OnChallangeStart();
+    public OnChallangeStart _challangeStart;
+
     public delegate void OnActionSuccess();
     public OnActionSuccess _actionSuccess;
 
@@ -42,7 +45,8 @@ public class BarChallenge : MonoBehaviour
 
     private void Start()
     {
-        SetObjectState(true);
+        SetObjectState(false);
+        _challangeStart += BarOn;
 
         SetBarDimensions();
     }
@@ -129,6 +133,11 @@ public class BarChallenge : MonoBehaviour
     private float RandomPositionInRangeOfBar()
     {
         return UnityEngine.Random.Range(0,100);
+    }
+
+    private void BarOn()
+    {
+        SetObjectState(true);
     }
 
     public void SetObjectState(bool x)
