@@ -17,7 +17,7 @@ public class Cus1Events : MonoBehaviour
         fadeScreenIn.SetActive(false);
         yield return new WaitForSeconds(2);
         customer1.SetActive(true);
-        Debug.Log("Hi");
-        BarChallenge.Instance._challangeStart?.Invoke();
+        //trigger customer drink order dialogue
+
     }
 }
