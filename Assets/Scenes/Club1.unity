@@ -1941,9 +1941,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelHandler
   _customers:
+  - {fileID: 11400000, guid: efdcaf4486c16c142964387869efd3ef, type: 2}
+  - {fileID: 11400000, guid: 927a8f5399014cd42ae4a19051aa701e, type: 2}
   - {fileID: 11400000, guid: 4b53940197d743c46ab1d8ce73961a06, type: 2}
-  - {fileID: 11400000, guid: 927a8f5399014cd42ae4a19051aa701e, type: 2}
-  - {fileID: 11400000, guid: 927a8f5399014cd42ae4a19051aa701e, type: 2}
   NameText: {fileID: 1383053179}
   CustomerImage: {fileID: 139662190}
 --- !u!4 &2042307543
