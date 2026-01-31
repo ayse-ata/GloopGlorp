@@ -4,6 +4,7 @@ using UnityEngine;
 public class Customer : ScriptableObject
 {
     public Sprite customerSprite;
+    public Sprite customerSpriteAngry;
     public string customerName;
     public int rounds;
     [SerializeField]

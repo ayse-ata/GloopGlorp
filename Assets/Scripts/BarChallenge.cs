@@ -42,7 +42,9 @@ public class BarChallenge : MonoBehaviour
 
     private void Start()
     {
-        SetObjectState(true);
+        //Setting this to false by default
+        //Setting to true from Cus1Events.cs -Ross
+        SetObjectState(false);
 
         SetBarDimensions();
     }
