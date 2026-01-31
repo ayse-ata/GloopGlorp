@@ -48,7 +48,7 @@ public class Dialogue : MonoBehaviour
         StartCoroutine(RunDialogue(reaction, liveTime));
     }
 
-    private IEnumerator RunDialogue(string reaction, float liveTime)
+    public IEnumerator RunDialogue(string reaction, float liveTime)
     {
         inDialogue = true;
 

@@ -59,10 +59,11 @@ public class LevelHandler : MonoBehaviour
         _nameText.text = customer.customerName;
         _customerSprite.sprite = customer.customerSprite;
 
+
+
         Dialogue.Instance.PushNewDialogue(_currentCustomer.drinkOrder, 3f);
         BarChallenge.Instance.SetNewChallange(((int)_currentCustomer.difficulty));
     }
-
     public void AdvanceCustomer()
     {
         _currentRound++;

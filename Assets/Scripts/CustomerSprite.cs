@@ -4,7 +4,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class CustomerSprite : MonoBehaviour
 {
-    [SerializeField] Customer customerData;
+    [SerializeField] public Customer customerData;
     private Image _image;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

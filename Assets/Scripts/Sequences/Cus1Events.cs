@@ -26,15 +26,12 @@ public class Cus1Events : MonoBehaviour
         fadeScreenIn.SetActive(false);
         yield return new WaitForSeconds(2);
         customer1.SetActive(true);
-        
-        //trigger customer drink order dialogue
-        //Not sure if dialogue has been implemented yet? -Ross
-        
-        //wait for secs so that drink order animation will play
-        yield return new WaitForSeconds(2);
-        
+
+        yield return StartCoroutine(Dialogue.Instance.RunDialogue(customer.GetComponent<CustomerSprite>().customerData.drinkOrder, 3f));
+        //yield return new WaitForSeconds(2);
+
         //trigger customer1 minigame box
-        BarChallenge.Instance.SetObjectState(true);
+        BarChallenge.Instance._challangeStart?.Invoke();
 
         //Not sure how to detect when game ends at this point -Ross
         //Ending game by default after 10 seconds
