@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2f9a2a783de9741800c9fd756ab82d, type: 3}
   m_Name: FUCKK 1
   m_EditorClassIdentifier: Assembly-CSharp::Customer
+  customerSprite: {fileID: -5482771833942463485, guid: 86f3dd9995a786b4e8e5a7adb9df6625, type: 3}
   customerName: Jessica
   rounds: 5
-  difficulty: 500
+  difficulty: 300

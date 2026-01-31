@@ -148,10 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a392e33c8b222c74fa4078a86a079b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelHandler
-  customers:
+  _customers:
   - {fileID: 11400000, guid: 4b53940197d743c46ab1d8ce73961a06, type: 2}
   - {fileID: 11400000, guid: 927a8f5399014cd42ae4a19051aa701e, type: 2}
-  nameText: {fileID: 921919438}
+  NameText: {fileID: 921919438}
+  CustomerImage: {fileID: 476001689}
 --- !u!4 &318129239
 Transform:
   m_ObjectHideFlags: 0
@@ -201,7 +202,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: -61}
+  m_AnchoredPosition: {x: 279, y: -239}
   m_SizeDelta: {x: 852.3777, y: 852.3777}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &476001691
@@ -217,14 +218,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -5482771833942463485, guid: 86f3dd9995a786b4e8e5a7adb9df6625, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -944,9 +945,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bd23d30ee15af47bc27de14c00b7fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BarChallenge
-  playerPointer: {fileID: 725083239}
-  challangeBar: {fileID: 1262113335}
-  barClickPoint: {fileID: 1940292596}
+  _playerPointer: {fileID: 725083239}
+  ChallangeBar: {fileID: 1262113335}
+  BarClickPoint: {fileID: 1940292596}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

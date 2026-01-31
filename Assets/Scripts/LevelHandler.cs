@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class LevelHandler : MonoBehaviour
 {
@@ -12,14 +13,14 @@ public class LevelHandler : MonoBehaviour
     public GameObject CustomerImage;
 
     private TextMeshProUGUI _nameText;
-    private SpriteRenderer _customerSprite;
+    private Image _customerSprite;
 
     private int _customerArrayPosition;
     private int _currentRound;
 
     private void Start()
     {
-        _customerSprite = CustomerImage.GetComponent<SpriteRenderer>();
+        _customerSprite = CustomerImage.GetComponent<Image>();
         _nameText = NameText.GetComponent<TextMeshProUGUI>();
 
         BarChallenge.Instance._actionSuccess += AdvanceCustomer;
@@ -54,7 +55,7 @@ public class LevelHandler : MonoBehaviour
         _nameText.text = customer.customerName;
         _customerSprite.sprite = customer.customerSprite;
         
-        BarChallenge.Instance.SetNewChallange(_currentCustomer.difficulty);
+        BarChallenge.Instance.SetNewChallange(((int)_currentCustomer.difficulty));
     }
 
     public void AdvanceCustomer()
@@ -66,6 +67,6 @@ public class LevelHandler : MonoBehaviour
             return;
         }
 
-        BarChallenge.Instance.SetNewChallange(_currentCustomer.difficulty);
+        BarChallenge.Instance.SetNewChallange((int)_currentCustomer.difficulty);
     }
 }
