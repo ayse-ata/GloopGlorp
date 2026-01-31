@@ -1,20 +1,31 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class LevelHandler : MonoBehaviour
 {
     [SerializeField]
-    private Customer[] customers;
-    private Customer currentCustomer;
+    private Customer[] _customers;
+    private Customer _currentCustomer;
 
-    private int customerArrayPosition;
-    private int currentRound;
+    public GameObject NameText;
+    public GameObject CustomerImage;
+
+    private TextMeshProUGUI _nameText;
+    private Image _customerSprite;
+
+    private int _customerArrayPosition;
+    private int _currentRound;
 
     private void Start()
     {
-        BarChallenge.Instance.OnSuccess.AddListener(AdvanceCustomer);
-        customerArrayPosition = 0;
-        SetCustomer(customers[customerArrayPosition]);
+        _customerSprite = CustomerImage.GetComponent<Image>();
+        _nameText = NameText.GetComponent<TextMeshProUGUI>();
+
+        BarChallenge.Instance._actionSuccess += AdvanceCustomer;
+        _customerArrayPosition = 0;
+        SetCustomer(_customers[_customerArrayPosition]);
     }
 
     private void Update()
@@ -27,30 +38,35 @@ public class LevelHandler : MonoBehaviour
 
     void NextCustomer()
     {
-        customerArrayPosition++;
-        if(customerArrayPosition >= customers.Length)
+        _customerArrayPosition++;
+        if(_customerArrayPosition >= _customers.Length)
         {
+            Debug.Log("end");
             return;
         }
 
-        SetCustomer(customers[customerArrayPosition]);
+        SetCustomer(_customers[_customerArrayPosition]);
     }
 
-    void SetCustomer(Customer customer)
+    public void SetCustomer(Customer customer)
     {
-        currentRound = 0;
-        currentCustomer = customer;
+        _currentRound = 0;
+        _currentCustomer = customer;
+        _nameText.text = customer.customerName;
+        _customerSprite.sprite = customer.customerSprite;
+        
+        BarChallenge.Instance.SetNewChallange(((int)_currentCustomer.difficulty));
     }
 
-    void AdvanceCustomer()
+    public void AdvanceCustomer()
     {
-        currentRound++;
-        if(currentRound >= currentCustomer.rounds)
+        _currentRound++;
+        if(_currentRound >= _currentCustomer.rounds)
         {
             NextCustomer();
             return;
         }
 
-        BarChallenge.Instance.SetNewChallange(currentCustomer.difficulty);
+        BarChallenge.Instance.SetNewChallange((int)_currentCustomer.difficulty);
     }
 }

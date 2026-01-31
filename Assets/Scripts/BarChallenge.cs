@@ -9,21 +9,24 @@ public class BarChallenge : MonoBehaviour
     private static BarChallenge _instance;
     public static BarChallenge Instance { get { return _instance; } }
 
-    private float playerPointerPosition;
-    public GameObject playerPointer;
+    private float _playerPointerPosition;
+    public GameObject _playerPointer;
 
-    public UnityEvent OnSuccess;
-    public UnityEvent OnFail;
+    public delegate void OnActionSuccess();
+    public OnActionSuccess _actionSuccess;
 
-    private int barLength = 100;
+    public delegate void OnActionFail();
+    public OnActionFail _actionFail;
 
-    private float barWidth;
-    private float calc;
-    public GameObject challangeBar;
+    private int _barLength = 100;
 
-    public GameObject barClickPoint;
+    private float _barWidth;
+    private float _calc;
 
-    private bool barActive;
+    public GameObject ChallangeBar;
+    public GameObject BarClickPoint;
+
+    private bool _barActive;
 
     private void Awake()
     {
@@ -42,16 +45,12 @@ public class BarChallenge : MonoBehaviour
         SetObjectState(true);
 
         SetBarDimensions();
-
-        OnSuccess = new UnityEvent();
-
-        OnFail = new UnityEvent();
     }
 
     private void Update()
     {
 
-        if (!barActive)
+        if (!_barActive)
         {
             return;
         }
@@ -59,48 +58,48 @@ public class BarChallenge : MonoBehaviour
         MovePointer();
     }
 
+
     private void MovePointer()
     {
 
         float time = Mathf.PingPong(Time.time * 1f, 1);
-        playerPointerPosition = Mathf.Lerp(0, barLength, time);
+        _playerPointerPosition = Mathf.Lerp(0, _barLength, time);
 
-        playerPointer.transform.localPosition = new Vector2(GetPointOnBar(playerPointerPosition), playerPointer.transform.localPosition.y);
+        _playerPointer.transform.localPosition = new Vector2(GetPointOnBar(_playerPointerPosition), _playerPointer.transform.localPosition.y);
     }
 
     private void SetBarDimensions()
     {
-        barWidth = challangeBar.GetComponent<RectTransform>().rect.width;
-        calc = barWidth / barLength;
+        _barWidth = ChallangeBar.GetComponent<RectTransform>().rect.width;
+        _calc = _barWidth / _barLength;
     }
 
     public void Action()
     {
-        if (!barActive)
+        if (!_barActive)
         {
             return;
         }
 
         if (InBoundsOfGoal())
         {
-            SetNewChallange(50);
-            OnSuccess.Invoke();
+            _actionSuccess?.Invoke();
             Debug.Log("win");
+            return;
         }
-        else
-        {
-            Debug.Log("fail");
-        }
-        
+
+        _actionFail?.Invoke();
+        Debug.Log("fail");
+        return;
     }
 
     bool InBoundsOfGoal()
     {
-        RectTransform rectT = barClickPoint.GetComponent<RectTransform>();
+        RectTransform rectT = BarClickPoint.GetComponent<RectTransform>();
         float x = rectT.sizeDelta.x / 2;
-        float s = barClickPoint.transform.localPosition.x - x;
-        float e = barClickPoint.transform.localPosition.x + x;
-        float p = playerPointer.transform.localPosition.x;
+        float s = BarClickPoint.transform.localPosition.x - x;
+        float e = BarClickPoint.transform.localPosition.x + x;
+        float p = _playerPointer.transform.localPosition.x;
         if (p >= s && p <= e)
         {
             return true;
@@ -110,16 +109,21 @@ public class BarChallenge : MonoBehaviour
 
     public void SetNewChallange(int size)
     {
-        RectTransform rect = barClickPoint.GetComponent<RectTransform>();
+        if (!_barActive)
+        {
+            return;
+        }
+
+        RectTransform rect = BarClickPoint.GetComponent<RectTransform>();
         rect.sizeDelta = new Vector2(size ,rect.sizeDelta.y);
 
 
-        barClickPoint.transform.localPosition = new Vector2(GetPointOnBar(RandomPositionInRangeOfBar()), barClickPoint.transform.localPosition.y);
+        BarClickPoint.transform.localPosition = new Vector2(GetPointOnBar(RandomPositionInRangeOfBar()), BarClickPoint.transform.localPosition.y);
     }
 
     private float GetPointOnBar(float p)
     {
-        return (p * calc) - (barWidth / 2);
+        return (p * _calc) - (_barWidth / 2);
     }
 
     private float RandomPositionInRangeOfBar()
@@ -127,9 +131,9 @@ public class BarChallenge : MonoBehaviour
         return UnityEngine.Random.Range(0,100);
     }
 
-    private void SetObjectState(bool x)
+    public void SetObjectState(bool x)
     {
-        barActive = x;
-        challangeBar.SetActive(barActive);
+        _barActive = x;
+        ChallangeBar.SetActive(_barActive);
     }
 }
