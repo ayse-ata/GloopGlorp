@@ -13,7 +13,7 @@ public class Dialogue : MonoBehaviour
     public static Dialogue Instance { get { return _instance; } }
 
     public GameObject DialogueContainerBox;
-    public GameObject DialogueImage;
+    public GameObject DialogueTMP;
 
     private GameObject _dialogueContainerBox;
     private TextMeshProUGUI _dialogueTMP;
@@ -36,7 +36,7 @@ public class Dialogue : MonoBehaviour
         inDialogue = false;
 
         _dialogueContainerBox = DialogueContainerBox;
-        _dialogueTMP = DialogueImage.GetComponent<TextMeshProUGUI>();
+        _dialogueTMP = DialogueTMP.GetComponent<TextMeshProUGUI>();
 
         _dialogueContainerBox.SetActive(false);
     }
@@ -56,7 +56,7 @@ public class Dialogue : MonoBehaviour
 
 
         _dialogueContainerBox.SetActive(true);
-        yield return new WaitForSeconds(liveTime * Time.time);
+        yield return new WaitForSeconds(liveTime);
         _dialogueContainerBox.SetActive(false);
 
         inDialogue = false;

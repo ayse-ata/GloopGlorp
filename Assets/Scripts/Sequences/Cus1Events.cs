@@ -27,7 +27,7 @@ public class Cus1Events : MonoBehaviour
         yield return new WaitForSeconds(2);
         customer1.SetActive(true);
 
-        yield return StartCoroutine(Dialogue.Instance.RunDialogue(customer.GetComponent<CustomerSprite>().customerData.drinkOrder, 3f));
+        yield return StartCoroutine(Dialogue.Instance.RunDialogue(customer.GetComponent<CustomerSprite>().customerData.drinkOrder, 1f));
         //yield return new WaitForSeconds(2);
 
         //trigger customer1 minigame box
