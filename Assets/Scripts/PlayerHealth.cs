@@ -27,7 +27,7 @@ public class PlayerHealth : MonoBehaviour
     }
     void Die()
     {
-        playerSR.enabled = false;
+        //commence failure sequence animation
         BarChallenge.Instance.SetObjectState(false);
     }
     
