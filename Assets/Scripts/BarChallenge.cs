@@ -18,6 +18,9 @@ public class BarChallenge : MonoBehaviour
     public delegate void OnActionFail();
     public OnActionFail _actionFail;
 
+    public delegate void OnChallangeStart();
+    public OnChallangeStart _challangeStart;
+
     private int _barLength = 100;
 
     private float _barWidth;
@@ -42,9 +45,9 @@ public class BarChallenge : MonoBehaviour
 
     private void Start()
     {
-        //Setting this to false by default
-        //Setting to true from Cus1Events.cs -Ross
+
         SetObjectState(false);
+        _challangeStart += BarOn;
 
         SetBarDimensions();
     }
@@ -117,7 +120,7 @@ public class BarChallenge : MonoBehaviour
         }
 
         RectTransform rect = BarClickPoint.GetComponent<RectTransform>();
-        rect.sizeDelta = new Vector2(size ,rect.sizeDelta.y);
+        rect.sizeDelta = new Vector2(size, rect.sizeDelta.y);
 
 
         BarClickPoint.transform.localPosition = new Vector2(GetPointOnBar(RandomPositionInRangeOfBar()), BarClickPoint.transform.localPosition.y);
@@ -130,8 +133,10 @@ public class BarChallenge : MonoBehaviour
 
     private float RandomPositionInRangeOfBar()
     {
-        return UnityEngine.Random.Range(0,100);
+        return UnityEngine.Random.Range(0, 100);
     }
+
+    private void BarOn() { SetObjectState(true); }
 
     public void SetObjectState(bool x)
     {
