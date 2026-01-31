@@ -12,11 +12,11 @@ public class BarChallenge : MonoBehaviour
     private float _playerPointerPosition;
     public GameObject _playerPointer;
 
-    //public static UnityEvent OnSuccess;
-    //public UnityEvent OnFail;
-
     public delegate void OnActionSuccess();
     public OnActionSuccess _actionSuccess;
+
+    public delegate void OnActionFail();
+    public OnActionFail _actionFail;
 
     private int _barLength = 100;
 
@@ -85,12 +85,12 @@ public class BarChallenge : MonoBehaviour
         {
             _actionSuccess?.Invoke();
             Debug.Log("win");
+            return;
         }
-        else
-        {
-            Debug.Log("fail");
-        }
-        
+
+        _actionFail?.Invoke();
+        Debug.Log("fail");
+        return;
     }
 
     bool InBoundsOfGoal()
@@ -109,6 +109,11 @@ public class BarChallenge : MonoBehaviour
 
     public void SetNewChallange(int size)
     {
+        if (!_barActive)
+        {
+            return;
+        }
+
         RectTransform rect = BarClickPoint.GetComponent<RectTransform>();
         rect.sizeDelta = new Vector2(size ,rect.sizeDelta.y);
 
@@ -126,7 +131,7 @@ public class BarChallenge : MonoBehaviour
         return UnityEngine.Random.Range(0,100);
     }
 
-    private void SetObjectState(bool x)
+    public void SetObjectState(bool x)
     {
         _barActive = x;
         ChallangeBar.SetActive(_barActive);

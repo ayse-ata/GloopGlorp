@@ -15,4 +15,4 @@ MonoBehaviour:
   customerSprite: {fileID: -4296760176796813495, guid: 1bee1b05cf0e3f94484d87ef87404ee5, type: 3}
   customerName: Fionn
   rounds: 5
-  difficulty: 100
+  difficulty: 5

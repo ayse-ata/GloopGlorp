@@ -10,8 +10,12 @@ public class PlayerHealth : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Start()
     {
+        BarChallenge.Instance._actionFail += TakeDamage;
+
         currentHealth = maxHealth;
     }
+
+    private void TakeDamage() { TakeDamage(1); }
 
     public void TakeDamage(int amount)
     {
@@ -24,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         playerSR.enabled = false;
+        BarChallenge.Instance.SetObjectState(false);
     }
     
 }
