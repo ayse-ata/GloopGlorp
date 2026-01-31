@@ -547,6 +547,7 @@ GameObject:
   m_Component:
   - component: {fileID: 997706919}
   - component: {fileID: 997706922}
+  - component: {fileID: 997706924}
   - component: {fileID: 997706921}
   - component: {fileID: 997706920}
   m_Layer: 0
@@ -635,6 +636,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997706918}
   m_CullTransparentMesh: 1
+--- !u!114 &997706924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997706918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8077b15099e6b684ba2ccdb8ab05eb44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CustomerSprite
+  customerData: {fileID: 11400000, guid: efdcaf4486c16c142964387869efd3ef, type: 2}
 --- !u!1 &1046759422
 GameObject:
   m_ObjectHideFlags: 0
