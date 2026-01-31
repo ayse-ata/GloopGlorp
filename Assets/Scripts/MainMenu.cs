@@ -5,7 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame()
     {
-        SceneManager.LoadSceneAsync("Club1");
+        SceneManager.LoadSceneAsync("Intro");
     }
     public void Credits()
     {
