@@ -7,7 +7,7 @@ public class CustomerSprite : MonoBehaviour
     [SerializeField] public Customer customerData;
     private Image _image;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         _image = GetComponent<Image>();
     }

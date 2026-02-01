@@ -9,8 +9,21 @@ public class BarChallenge : MonoBehaviour
     private static BarChallenge _instance;
     public static BarChallenge Instance { get { return _instance; } }
 
-    private float _playerPointerPosition;
     public GameObject _playerPointer;
+    public GameObject ChallangeBar;
+    public GameObject BarClickPoint;
+
+    private bool _barActive = false;
+    private float _playerPointerPosition;
+    private float _barWidth;
+    private float _calc;
+    private int _barLength = 100;
+
+    private bool _challengeRunning = false;
+    public bool IsChallengeRunning() 
+    { 
+        return _challengeRunning; 
+    }
 
     public delegate void OnActionSuccess();
     public OnActionSuccess _actionSuccess;
@@ -20,16 +33,6 @@ public class BarChallenge : MonoBehaviour
 
     public delegate void OnChallangeStart();
     public OnChallangeStart _challangeStart;
-
-    private int _barLength = 100;
-
-    private float _barWidth;
-    private float _calc;
-
-    public GameObject ChallangeBar;
-    public GameObject BarClickPoint;
-
-    private bool _barActive;
 
     private void Awake()
     {
@@ -45,25 +48,24 @@ public class BarChallenge : MonoBehaviour
 
     private void Start()
     {
+        SetBarDimensions();
 
         SetObjectState(false);
-        _challangeStart += BarOn;
 
-        SetBarDimensions();
     }
 
     private void Update()
     {
 
+        Debug.Log($"BarChallenge Update — barActive = {_barActive}");
+
         if (!_barActive)
-        {
             return;
-        }
 
         MovePointer();
     }
 
-
+    
     private void MovePointer()
     {
 
@@ -77,6 +79,39 @@ public class BarChallenge : MonoBehaviour
     {
         _barWidth = ChallangeBar.GetComponent<RectTransform>().rect.width;
         _calc = _barWidth / _barLength;
+    }
+    private float GetPointOnBar(float p)
+    {
+        return (p * _calc) - (_barWidth / 2);
+    }
+
+
+    public void StartChallenge()
+    {
+        _challengeRunning = true;
+        Debug.Log("Bar Challenge STARTED");
+        Debug.Log("ChallangeBar: " + (ChallangeBar != null));
+        Debug.Log("_playerPointer: " + (_playerPointer != null));
+        Debug.Log("BarClickPoint: " + (BarClickPoint != null));
+        SetObjectState(true);
+        _challangeStart?.Invoke();
+    }
+
+    public void StopChallenge()
+    {
+        _challengeRunning = false;
+        SetObjectState(false); // hide the Bar UI
+    }
+
+    public void SetObjectState(bool state)
+    {
+        _barActive = state;
+        if (ChallangeBar != null )
+            ChallangeBar.SetActive(state);
+        if (BarClickPoint != null)
+            BarClickPoint.SetActive(state);
+        if (_playerPointer != null )
+            _playerPointer.SetActive(state);
     }
 
     public void Action()
@@ -95,7 +130,6 @@ public class BarChallenge : MonoBehaviour
 
         _actionFail?.Invoke();
         Debug.Log("fail");
-        return;
     }
 
     bool InBoundsOfGoal()
@@ -105,11 +139,7 @@ public class BarChallenge : MonoBehaviour
         float s = BarClickPoint.transform.localPosition.x - x;
         float e = BarClickPoint.transform.localPosition.x + x;
         float p = _playerPointer.transform.localPosition.x;
-        if (p >= s && p <= e)
-        {
-            return true;
-        }
-        return false;
+        return (p >= s && p <= e);
     }
 
     public void SetNewChallange(int size)
@@ -126,21 +156,10 @@ public class BarChallenge : MonoBehaviour
         BarClickPoint.transform.localPosition = new Vector2(GetPointOnBar(RandomPositionInRangeOfBar()), BarClickPoint.transform.localPosition.y);
     }
 
-    private float GetPointOnBar(float p)
-    {
-        return (p * _calc) - (_barWidth / 2);
-    }
+    
 
     private float RandomPositionInRangeOfBar()
     {
         return UnityEngine.Random.Range(0, 100);
-    }
-
-    private void BarOn() { SetObjectState(true); }
-
-    public void SetObjectState(bool x)
-    {
-        _barActive = x;
-        ChallangeBar.SetActive(_barActive);
     }
 }

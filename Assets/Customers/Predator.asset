@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2f9a2a783de9741800c9fd756ab82d, type: 3}
   m_Name: Predator
   m_EditorClassIdentifier: Assembly-CSharp::Customer
-  customerSprite: {fileID: -4296760176796813495, guid: 1bee1b05cf0e3f94484d87ef87404ee5, type: 3}
-  customerSpriteAngry: {fileID: 0}
+  customerSprite: {fileID: 5352120192383014475, guid: 267a6b2a670c6a14a9ff1f55cb0699eb, type: 3}
+  customerSpriteAngry: {fileID: -3755707340610745381, guid: ddc56a0dd95bd6549b8c36eef7d0dc54, type: 3}
   customerName: Predator
   rounds: 5
   difficulty: 2

@@ -1,66 +1,122 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static CustomerSprite;
 
 public class Cus1Events : MonoBehaviour
 {
-    
-
     public GameObject fadeScreenIn;
     public GameObject customer1;
+    public GameObject customer2;
+    public GameObject customer3;
 
     private GameObject currentCustomer;
+    private GameObject[] customers;
+
     void Start()
     {
-        StartCoroutine(EventStarter(customer1));
+        customers = new GameObject[] { customer1, customer2, customer3 };
+
+        // Make sure all customers start inactive
+        foreach (GameObject c in customers)
+        {
+            c.SetActive(false);
+        }
+
+        // Start the first customer sequence
+        StartCoroutine(EventStarter(0));
     }
 
-    IEnumerator EventStarter(GameObject customer)
+    IEnumerator EventStarter(int customerIndex)
     {
-        currentCustomer = customer;
-        //Subscribe to BarChallenge events
-        BarChallenge.Instance._actionSuccess += OnSuccess;
-        BarChallenge.Instance._actionFail += OnFail;
-        
+        if (customerIndex >= customers.Length)
+            yield break;
+
+        currentCustomer = customers[customerIndex];
+
+        Debug.Log("Cus1Events: EventStarter running");
+
+        currentCustomer.SetActive(true);
+        Debug.Log("Starting sequence for: " + currentCustomer.name);
+
         yield return new WaitForSeconds(1);
         fadeScreenIn.SetActive(false);
         yield return new WaitForSeconds(2);
-        customer1.SetActive(true);
 
-        yield return StartCoroutine(Dialogue.Instance.RunDialogue(customer.GetComponent<CustomerSprite>().customerData.drinkOrder, 1f));
+        yield return StartCoroutine(Dialogue.Instance.RunDialogue(currentCustomer.GetComponent<CustomerSprite>().customerData.drinkOrder, 1f));
+        Debug.Log("cus1events: Dialogue finished");
         //yield return new WaitForSeconds(2);
+        Debug.Log("Cus1Events: Starting challenge");
 
-        //trigger customer1 minigame box
-        BarChallenge.Instance._challangeStart?.Invoke();
+        BarChallenge.Instance._actionSuccess += OnSuccess;
+        BarChallenge.Instance._actionFail += OnFail;
 
-        //Not sure how to detect when game ends at this point -Ross
-        //Ending game by default after 10 seconds
-        //Have something else call EndChallenge when the minigame is meant to end
-        
-        yield return new WaitForSeconds(10);
-        EndChallenge();
+        LevelHandler.Instance.StartChallenge();
+        //wait until challenge finishes
+
+        while (LevelHandler.Instance.IsChallengeRunning())
+        {
+            yield return null;
+        }
+
+        //chalenge finixhes - walk customer out
+        yield return StartCoroutine(CustomerExit(currentCustomer));
+
+        BarChallenge.Instance._actionSuccess += OnSuccess;
+        BarChallenge.Instance._actionFail += OnFail;
+
+        //move onto next customer
+        StartCoroutine(EventStarter(customerIndex + 1));
     }
 
+    IEnumerator CustomerExit(GameObject customer)
+    {
+        Animator anim = customer.GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.SetBool("walkOut", true);
+        }
+
+        Vector3 startPos = customer.transform.position; // current position
+        Vector3 endPos = startPos + new Vector3(5f, 0f, 0f);
+
+        float duration = 2f; // seconds
+        float distance = Vector3.Distance(startPos, endPos);
+        float speed = distance / duration; // units per second
+        float moved = 0f;
+
+        while (moved < distance)
+        {
+            float step = speed * Time.deltaTime;
+            customer.transform.position = Vector3.MoveTowards(customer.transform.position, endPos, step);
+            moved += step;
+            yield return null;
+        }
+
+        customer.SetActive(false);
+
+        if (anim != null) 
+            anim.SetBool("walkOut", false);
+    }
 
     private void OnFail()
     {
-        SetCharacterSprite(CustomerSprite.SpriteType.ANGRY);
+        currentCustomer.GetComponent<CustomerSprite>().SetSprite(SpriteType.ANGRY);
     }
 
     private void OnSuccess()
     {
-        SetCharacterSprite(CustomerSprite.SpriteType.NORMAL);
+        currentCustomer.GetComponent<CustomerSprite>().SetSprite(SpriteType.NORMAL);
     }
     private void SetCharacterSprite(CustomerSprite.SpriteType spriteType)
     {
         currentCustomer.GetComponent<CustomerSprite>().SetSprite(spriteType);
     }
 
-    private void EndChallenge()
+    private void OnDestroy()
     {
-        BarChallenge.Instance.SetObjectState(false);
-        
-        //Unsubscribe from BarChallenge events (to avoid errors)
+        if (BarChallenge.Instance != null) return;
+
         BarChallenge.Instance._actionSuccess -= OnSuccess;
         BarChallenge.Instance._actionFail -= OnFail;
     }

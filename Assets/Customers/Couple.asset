@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2f9a2a783de9741800c9fd756ab82d, type: 3}
   m_Name: Couple
   m_EditorClassIdentifier: Assembly-CSharp::Customer
-  customerSprite: {fileID: -5482771833942463485, guid: 86f3dd9995a786b4e8e5a7adb9df6625, type: 3}
+  customerSprite: {fileID: -71115139463554011, guid: b0a335d433cb36b4ea9af666e82ead71, type: 3}
+  customerSpriteAngry: {fileID: 8591264997066434349, guid: 6643bad7f7187e1489c584816b2e0c57, type: 3}
   customerName: Clingy Couple
   rounds: 5
   difficulty: 3
+  drinkOrder: 
