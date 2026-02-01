@@ -651,7 +651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChangeSceneonTimer
   changeTime: 60
-  sceneName: Club1
+  sceneName: JesstClub
 --- !u!4 &148463752
 Transform:
   m_ObjectHideFlags: 0
