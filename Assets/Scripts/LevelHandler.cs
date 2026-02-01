@@ -148,6 +148,10 @@ public class LevelHandler : MonoBehaviour
 
     } 
 
+    public int GetCustomerNum()
+    { return _customerArrayPosition; }
+     
+
 }
   
     

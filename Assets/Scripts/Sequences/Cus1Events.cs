@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -7,8 +8,11 @@ public class Cus1Events : MonoBehaviour
 {
     public GameObject fadeScreenIn;
     public GameObject customer1;
+    //public GameObject cus1Order;
     public GameObject customer2;
+   // public GameObject cus2Order;
     public GameObject customer3;
+    //public GameObject cus3Order;
 
     private GameObject currentCustomer;
     private GameObject[] customers;
@@ -22,7 +26,9 @@ public class Cus1Events : MonoBehaviour
         {
             c.SetActive(false);
         }
-
+        //cus1Order.SetActive(false);
+        //cus2Order.SetActive(false);
+        //cus3Order.SetActive(false);
         // Start the first customer sequence
         StartCoroutine(EventStarter(0));
     }
@@ -42,7 +48,6 @@ public class Cus1Events : MonoBehaviour
         yield return new WaitForSeconds(1);
         fadeScreenIn.SetActive(false);
         yield return new WaitForSeconds(2);
-
         yield return StartCoroutine(Dialogue.Instance.RunDialogue(currentCustomer.GetComponent<CustomerSprite>().customerData.drinkOrder, 1f));
         Debug.Log("cus1events: Dialogue finished");
         //yield return new WaitForSeconds(2);
