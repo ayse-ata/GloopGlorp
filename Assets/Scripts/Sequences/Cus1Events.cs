@@ -35,7 +35,7 @@ public class Cus1Events : MonoBehaviour
         currentCustomer = customers[customerIndex];
 
         Debug.Log("Cus1Events: EventStarter running");
-
+        //Debug.Log("Starting sequence for: " + currentCustomer.name);
         currentCustomer.SetActive(true);
         Debug.Log("Starting sequence for: " + currentCustomer.name);
 
@@ -62,11 +62,22 @@ public class Cus1Events : MonoBehaviour
         //chalenge finixhes - walk customer out
         yield return StartCoroutine(CustomerExit(currentCustomer));
 
-        BarChallenge.Instance._actionSuccess += OnSuccess;
-        BarChallenge.Instance._actionFail += OnFail;
+        BarChallenge.Instance._actionSuccess -= OnSuccess;
+        BarChallenge.Instance._actionFail -= OnFail;
 
         //move onto next customer
         StartCoroutine(EventStarter(customerIndex + 1));
+
+        yield return new WaitForSeconds(10);
+        if (!BarChallenge.Instance.IsChallengeRunning())
+        {
+
+           // yield return StartCoroutine(CustomerExit(currentCustomer));
+
+            LevelHandler.Instance.ForceNextCustomer();
+            LevelHandler.Instance.SetCustomer();
+            LevelHandler.Instance.NextCustomer();
+        }
     }
 
     IEnumerator CustomerExit(GameObject customer)

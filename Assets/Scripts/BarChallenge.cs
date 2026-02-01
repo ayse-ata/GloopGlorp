@@ -57,7 +57,7 @@ public class BarChallenge : MonoBehaviour
     private void Update()
     {
 
-        Debug.Log($"BarChallenge Update — barActive = {_barActive}");
+       // Debug.Log($"BarChallenge Update — barActive = {_barActive}");
 
         if (!_barActive)
             return;
@@ -99,15 +99,25 @@ public class BarChallenge : MonoBehaviour
 
     public void StopChallenge()
     {
+
         _challengeRunning = false;
         SetObjectState(false); // hide the Bar UI
+        Debug.Log("BarSet: " + _barActive);
+
     }
 
     public void SetObjectState(bool state)
     {
         _barActive = state;
-        if (ChallangeBar != null )
+
+       
+
+        if (ChallangeBar != null)
+        {
             ChallangeBar.SetActive(state);
+            Debug.Log("BarSet: " + _barActive);
+
+        }
         if (BarClickPoint != null)
             BarClickPoint.SetActive(state);
         if (_playerPointer != null )

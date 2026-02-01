@@ -54,6 +54,7 @@ public class LevelHandler : MonoBehaviour
         // BarChallenge handles its own UI
         BarChallenge.Instance.StartChallenge();
         BarChallenge.Instance.SetNewChallange((int)_currentCustomer.difficulty);
+        Debug.Log("LevelHandler: Challenge difficulty " + (int)_currentCustomer.difficulty);
 
         Debug.Log("LevelHandler: Challenge started for " + _currentCustomer.customerName);
     }
@@ -61,7 +62,11 @@ public class LevelHandler : MonoBehaviour
     {
         if (!_challengeRunning) return;
         _challengeRunning = false;
-        BarChallenge.Instance.gameObject.SetActive(false);
+        BarChallenge.Instance.StopChallenge();
+
+        // BarChallenge.Instance.gameObject.SetActive(false);
+        Debug.Log("BarSet: " + false);
+
     }
 
     void PrepareNextCustomer()
@@ -83,7 +88,7 @@ public class LevelHandler : MonoBehaviour
         }
 
     }
-    void NextCustomer()
+    public void NextCustomer()
     {
         _customerArrayPosition++;
         if (_customerArrayPosition >= _customers.Length)
@@ -103,7 +108,7 @@ public class LevelHandler : MonoBehaviour
     }
     public void SetCustomer(Customer customer)
     {
-        NextCustomer();
+        //NextCustomer();
         _currentCustomer = customer;
         _nameText.text = customer.customerName;
         _customerSprite.sprite = customer.customerSprite;
